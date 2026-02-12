@@ -2,7 +2,11 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
-const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
+const otp = Math.floor(100000 + Math.random() * 900000);
+
+console.log("🔥 DEMO MODE OTP:", otp);
+
+// पुढचा code (save OTP / send response)
 
 const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE,
