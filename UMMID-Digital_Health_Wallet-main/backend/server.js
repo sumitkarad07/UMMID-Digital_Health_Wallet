@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
@@ -23,21 +22,11 @@ const patientRoutes = require('./routes/patientRoutes');
 app.use('/api/auth', authRoutes);
 app.use('/api/patient', patientRoutes);
 
-// Serve Frontend in Production
-if (process.env.NODE_ENV === 'production') {
-    // Serve static files from the React app
-    app.use(express.static(path.join(__dirname, '../frontend/dist')));
+// Health check
+app.get('/', (req, res) => {
+    res.send('Backend API is running 🚀');
+});
 
-    // Handle React routing, return all requests to React app
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-    });
-} else {
-    app.get('/', (req, res) => {
-        res.send('API is running...');
-    });
-}
-
-const server = app.listen(PORT, console.log(`Server running on port ${PORT}`));
-
-module.exports = app;
+app.listen(PORT, () =>
+    console.log(`Server running on port ${PORT}`)
+);
